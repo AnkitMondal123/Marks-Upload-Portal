@@ -1,0 +1,23 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  <label for="batch_name">Batch Name:</label>
+  <input type="text" name="batch_name" required>
+  <br>
+  <label for="semester_name">Semester Name:</label>
+  <input type="text" name="semester_name" required>
+  <br>
+  <label for="semester_number">Semester Number:</label>
+  <input type="number" name="semester_number" required>
+  <br>
+  <label for="course_code">Course Code:</label>
+  <input type="text" name="course_code" required>
+  <br>
+  <label for="course_title">Course Title:</label>
+  <input type="text" name="course_title" required>
+  <br>
+  <button type="submit">Create Course</button>
+</form>
+{% endblock content %}
