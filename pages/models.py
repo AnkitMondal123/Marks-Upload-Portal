@@ -48,7 +48,57 @@ class CO(models.Model):
 
     def __str__(self):
         return f"{self.course.course_title} - {self.course_outcome}"
+
+'''class PO(models.Model):
+    code=models.CharField(max_length=255,unique=True)
+    description=models.TextField()
     
+    def __str__(self):
+        return self.code
+
+class PSO(models.Model):
+    code=models.CharField(max_length=255,unique=True)
+    description=models.TextField()
+    
+    def __str__(self):
+        return self.code'''
+
+class CourseArticulationMatrix(models.Model):
+    #Represents a Course Articulation Matrix for a given course
+    course=models.ForeignKey(Course,on_delete=models.CASCADE,related_name='cam')
+    #outcome=models.ForeignKey(CO,on_delete=models.CASCADE)
+    conumber=models.CharField(max_length=5,default='-')
+    PO1=models.IntegerField(default=0)
+    PO2=models.IntegerField(default=0)
+    PO3=models.IntegerField(default=0)
+    PO4=models.IntegerField(default=0)
+    PO5=models.IntegerField(default=0)
+    PO6=models.IntegerField(default=0)
+    PO7=models.IntegerField(default=0)
+    PO8=models.IntegerField(default=0)
+    PO9=models.IntegerField(default=0)
+    PO10=models.IntegerField(default=0)
+    PO11=models.IntegerField(default=0)
+    PO12=models.IntegerField(default=0)
+    PSO1=models.IntegerField(default=0)
+    PSO2=models.IntegerField(default=0)
+    class Meta:
+        unique_together=('Course','CO')
+        verbose_name_singular='Course Articulation Matrix'
+    
+    def __str__(self):
+        return f'Course Articulation Matrix'
+    
+class Syllabus:
+    #Represents a University Syllabus
+    course=models.ForeignKey(Course,on_delete=models.CASCADE,related_name='syllabus')
+    unit=models.IntegerField()
+    content=models.TextField()
+    hours_per_unit=models.CharField(max_length=20)
+    
+    def __str__(self):
+        return f"Unit {self.unit}: {self.hours_per_unit} hours"
+
 class AssementRubrics(models.Model):
     # Represents a AssementRubrics for a given course
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='rubric')
