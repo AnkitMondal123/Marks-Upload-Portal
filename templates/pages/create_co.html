@@ -1,35 +1,39 @@
 {% extends "_base.html" %}
 {% load static %}
 {% block content %}
-<h3>Create CO</h3>
-<form method="POST">
+<h3 class="mb-4">Create CO</h3>
+<form method="POST" class="container">
   {% csrf_token %}
-  <label for="batch_selector">Select Batch:</label>
-  <select id="batch_selector" name="batch_selector">
-    <option value="">-- Select Batch --</option>
-    {% for b in batches %}
-      <option value="{{ b.id }}">{{ b.name }}</option>
-    {% endfor %}
-  </select>
-  <br>
-  <label for="semester_selector">Select Semester:</label>
-  <select id="semester_selector" name="semester_selector">
-    <option value="">-- Select Semester --</option>
-    {% for s in semesters %}
-      <option value="{{ s.id }}">{{ s.semester_name }}</option>
-    {% endfor %}
-  </select>
-  <br>
-  <label for="course_selector">Select Course:</label>
-  <select id="course_selector" name="course_selector">
-    <option value="">-- Select Course --</option>
-    {% for c in courses %}
-      <option value="{{ c.id }}">{{ c.course_title }}</option>
-    {% endfor %}
-  </select>
+  <div class="mb-3">
+    <label for="batch_selector" class="form-label">Select Batch:</label>
+    <select id="batch_selector" name="batch_selector" class="form-select">
+      <option value="">-- Select Batch --</option>
+      {% for b in batches %}
+        <option value="{{ b.id }}">{{ b.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="semester_selector" class="form-label">Select Semester:</label>
+    <select id="semester_selector" name="semester_selector" class="form-select">
+      <option value="">-- Select Semester --</option>
+      {% for s in semesters %}
+        <option value="{{ s.id }}">{{ s.semester_name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="course_selector" class="form-label">Select Course:</label>
+    <select id="course_selector" name="course_selector" class="form-select">
+      <option value="">-- Select Course --</option>
+      {% for c in courses %}
+        <option value="{{ c.id }}">{{ c.course_title }}</option>
+      {% endfor %}
+    </select>
+  </div>
   <hr>
-  <table id="coTable" class="table">
-    <thead>
+  <table id="coTable" class="table table-bordered">
+    <thead class="table-light">
       <tr>
         <th>CO Text</th>
         <th>Details</th>
@@ -42,9 +46,9 @@
     </tbody>
   </table>
   <input type="hidden" name="total_rows" id="total_rows" value="0" />
-  <button type="button" onclick="addRow()">Add Row</button>
-  <br><br>
-  <button type="submit">Submit</button>
+  <button type="button" class="btn btn-secondary mb-3" onclick="addRow()">Add Row</button>
+  <br>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 <script>
@@ -54,10 +58,10 @@ function addRow() {
   let row = table.insertRow(rowCount);
 
   row.innerHTML = `
-    <td><input type="text" name="co_text_${rowCount}" /></td>
-    <td><input type="text" name="details_${rowCount}" /></td>
-    <td><input type="text" name="verb_${rowCount}" /></td>
-    <td><input type="text" name="level_${rowCount}" /></td>
+    <td><input type="text" name="co_text_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="details_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="verb_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="level_${rowCount}" class="form-control" /></td>
   `;
   document.getElementById("total_rows").value = rowCount + 1;
 }
