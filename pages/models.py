@@ -82,9 +82,6 @@ class CourseArticulationMatrix(models.Model):
     PO12=models.IntegerField(default=0)
     PSO1=models.IntegerField(default=0)
     PSO2=models.IntegerField(default=0)
-    class Meta:
-        unique_together=('Course','CO')
-        verbose_name_singular='Course Articulation Matrix'
     
     def __str__(self):
         return f'Course Articulation Matrix'
