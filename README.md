@@ -12,13 +12,14 @@
 - Custom 404, 500, and 403 error pages
 
 ## Table of Contents
-* **[Installation](#installation)**
-  * [Pip](#pip)
-* [Next Steps](#next-steps)
-* [Contributing](#contributing)
 
+- **[Installation](#installation)**
+  - [Pip](#pip)
+- [Next Steps](#next-steps)
+- [Contributing](#contributing)
 
 ## 📖 Installation
+
 Lithium can be installed via Pip or Docker. To start, clone the repo to your local computer and change into the proper directory.
 
 ```
@@ -27,6 +28,7 @@ $ cd Marks-Upload-Portal
 ```
 
 ### Pip
+
 You can use [pip](https://pypi.org/project/pip/) to create a fresh virtual environment on either Windows or macOS.
 
 ```
@@ -46,6 +48,7 @@ Then install all packages hosted in `requirements.txt` and run `migrate` to conf
 
 ```
 (.venv) $ pip install -r requirements.txt
+(.venv) $ python manage.py makemigrations
 (.venv) $ python manage.py migrate
 (.venv) $ python manage.py createsuperuser
 (.venv) $ python manage.py runserver
@@ -60,9 +63,6 @@ Then install all packages hosted in `requirements.txt` and run `migrate` to conf
 - Make the [admin more secure](https://opensource.com/article/18/1/10-tips-making-django-admin-more-secure).
 - `django-allauth` supports [social authentication](https://django-allauth.readthedocs.io/en/latest/providers.html) if you need that.
 
-
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome! See [CONTRIBUTING.md]
-
-
