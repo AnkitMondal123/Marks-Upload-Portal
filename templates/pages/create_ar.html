@@ -1,0 +1,136 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block content %}
+<h3 class="mb-4 text-center">CO Evaluation</h3>
+<form method="POST" class="container">
+  {% csrf_token %}
+  
+  <!-- Align Batch, Semester, and Course in the same row -->
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <label for="batch_selector" class="form-label">Select Batch:</label>
+      <select id="batch_selector" name="batch_selector" class="form-select">
+        <option value="">-- Select Batch --</option>
+        {% for b in batches %}
+          <option value="{{ b.id }}">{{ b.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="semester_selector" class="form-label">Select Semester:</label>
+      <select id="semester_selector" name="semester_selector" class="form-select">
+        <option value="">-- Select Semester --</option>
+        {% for s in semesters %}
+          <option value="{{ s.id }}">{{ s.semester_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="course_selector" class="form-label">Select Course:</label>
+      <select id="course_selector" name="course_selector" class="form-select">
+        <option value="">-- Select Course --</option>
+        {% for c in courses %}
+          <option value="{{ c.id }}">{{ c.course_title }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  
+</form>
+
+<!-- Add gap between this section and the next -->
+<div style="margin-top: 40px;">
+  <h3 class="mb-4 text-center">CO Full Marks and Percentage Table</h3>
+  <div class="container">
+    <table class="table table-bordered text-center">
+      <thead>
+        <tr>
+          <th></th>
+          <th>CO1</th>
+          <th>CO2</th>
+          <th>CO3</th>
+          <th>CO4</th>
+          <th>CO5</th>
+          <th>CO6</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Full Marks</strong></td>
+          <td><input type="number" name="CO1_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="CO2_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="CO3_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="CO4_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="CO5_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="CO6_full_marks" class="form-control" placeholder="FM"></td>
+        </tr>
+        <tr>
+          <td><strong>Percentage</strong></td>
+          <td><input type="number" name="CO1_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="CO2_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="CO3_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="CO4_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="CO5_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="CO6_attainment_percent" class="form-control" placeholder="%"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- New submit button above the next table -->
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</div>
+
+<!-- Add gap between this table and the next -->
+<div style="margin-top: 80px;">
+  <table id="COTable" class="table table-bordered text-center">
+    <thead class="table-light">
+      <tr>
+        <th>Roll Number</th>
+        <th>Name</th>
+        <th>CO1 Marks</th>
+        <th>CO2 Marks</th>
+        <th>CO3 Marks</th>
+        <th>CO4 Marks</th>
+        <th>CO5 Marks</th>
+        <th>CO6 Marks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rows will be added by JS -->
+    </tbody>
+  </table>
+</div>
+
+<input type="hidden" name="total_rows" id="total_rows" value="0" />
+<div class="mb-3">
+  <button type="button" class="btn btn-primary" onclick="addRow()">Add Row</button>
+</div>
+
+<!-- Final submit button -->
+<div class="text-center">
+  <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+</form>
+
+<script>
+function addRow() {
+  const table = document.getElementById("COTable").getElementsByTagName("tbody")[0];
+  const rowCount = table.rows.length;
+  let row = table.insertRow(rowCount);
+
+  row.innerHTML = `
+    <td><input type="text" name="roll_number_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="name_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="CO1_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="CO2_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="CO3_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="CO4_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="CO5_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="CO6_marks_${rowCount}" class="form-control" /></td>
+  `;
+  document.getElementById("total_rows").value = rowCount + 1;
+}
+</script>
+{% endblock content %}
