@@ -1,7 +1,7 @@
 {% extends "_base.html" %}
 {% load static %}
 {% block content %}
-<h3 class="mb-4 text-center">Create CO</h3>
+<h3 class="mb-4 text-center">CO Evaluation</h3>
 <form method="POST" class="container">
   {% csrf_token %}
   
@@ -36,14 +36,99 @@
     </div>
   </div>
   
-  
-  
   <div class="text-center">
     <button type="submit" class="btn btn-primary">Submit</button>
   </div>
 </form>
 
+<!-- Add gap between this section and the next -->
+<div style="margin-top: 40px;">
+  <h3 class="mb-4 text-center">CO Full Marks and Percentage Table</h3>
+  <div class="container">
+    <table class="table table-bordered text-center">
+      <thead>
+        <tr>
+          <th></th>
+          <th>CO1</th>
+          <th>CO2</th>
+          <th>CO3</th>
+          <th>CO4</th>
+          <th>CO5</th>
+          <th>CO6</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Full Marks</strong></td>
+          <td><input type="number" name="co1_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="co2_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="co3_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="co4_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="co5_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="co6_full_marks" class="form-control" placeholder="FM"></td>
+        </tr>
+        <tr>
+          <td><strong>Percentage</strong></td>
+          <td><input type="number" name="co1_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="co2_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="co3_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="co4_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="co5_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="co6_attainment_percent" class="form-control" placeholder="%"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
+<!-- Add gap between this table and the next -->
+<div style="margin-top: 80px;">
+  <table id="coTable" class="table table-bordered text-center">
+    <thead class="table-light">
+      <tr>
+        <th>Roll Number</th>
+        <th>Name</th>
+        <th>Co1 Marks</th>
+        <th>Co2 Marks</th>
+        <th>Co3 Marks</th>
+        <th>Co4 Marks</th>
+        <th>Co5 Marks</th>
+        <th>Co6 Marks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rows will be added by JS -->
+    </tbody>
+  </table>
+</div>
+
+<input type="hidden" name="total_rows" id="total_rows" value="0" />
+<div class="mb-3">
+  <button type="button" class="btn btn-secondary" onclick="addRow()">Add Row</button>
+</div>
+
+<div class="text-center">
+  <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+</form>
+
+<script>
+function addRow() {
+  const table = document.getElementById("coTable").getElementsByTagName("tbody")[0];
+  const rowCount = table.rows.length;
+  let row = table.insertRow(rowCount);
+
+  row.innerHTML = `
+    <td><input type="text" name="roll_number_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="name_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="Co1_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="Co2_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="Co3_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="Co4_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="Co5_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="Co6_marks_${rowCount}" class="form-control" /></td>
+  `;
+  document.getElementById("total_rows").value = rowCount + 1;
+}
+</script>
 {% endblock content %}
-
-
