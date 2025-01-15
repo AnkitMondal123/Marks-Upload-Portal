@@ -1,0 +1,32 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block content %}
+<h1>University Syllabus</h1>
+
+    <div class="form-container">
+        <h3>Add Syllabus Entry</h3>
+        <label for="unit">Unit:</label>
+        <input type="text" id="unit" placeholder="Enter Unit Number">
+
+        <label for="content">Content:</label>
+        <textarea id="content" rows="5" placeholder="Enter Content"></textarea>
+
+        <label for="hrs">Hrs/Unit:</label>
+        <input type="number" id="hrs" min="1" max="9" placeholder="Enter Hours Per Unit">
+
+        <button onclick="addEntry()">Add to Syllabus</button>
+    </div>
+
+    <table id="syllabusTable">
+        <thead>
+            <tr>
+                <th>Unit</th>
+                <th>Content</th>
+                <th>Hrs/Unit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Existing syllabus entries can be added here -->
+        </tbody>
+    </table>
+{% endblock content %}
