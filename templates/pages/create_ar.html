@@ -60,21 +60,21 @@
       <tbody>
         <tr>
           <td><strong>Full Marks</strong></td>
-          <td><input type="number" name="co1_full_marks" class="form-control" placeholder="FM"></td>
-          <td><input type="number" name="co2_full_marks" class="form-control" placeholder="FM"></td>
-          <td><input type="number" name="co3_full_marks" class="form-control" placeholder="FM"></td>
-          <td><input type="number" name="co4_full_marks" class="form-control" placeholder="FM"></td>
-          <td><input type="number" name="co5_full_marks" class="form-control" placeholder="FM"></td>
-          <td><input type="number" name="co6_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="CO1_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="CO2_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="CO3_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="CO4_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="CO5_full_marks" class="form-control" placeholder="FM"></td>
+          <td><input type="number" name="CO6_full_marks" class="form-control" placeholder="FM"></td>
         </tr>
         <tr>
           <td><strong>Percentage</strong></td>
-          <td><input type="number" name="co1_attainment_percent" class="form-control" placeholder="%"></td>
-          <td><input type="number" name="co2_attainment_percent" class="form-control" placeholder="%"></td>
-          <td><input type="number" name="co3_attainment_percent" class="form-control" placeholder="%"></td>
-          <td><input type="number" name="co4_attainment_percent" class="form-control" placeholder="%"></td>
-          <td><input type="number" name="co5_attainment_percent" class="form-control" placeholder="%"></td>
-          <td><input type="number" name="co6_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="CO1_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="CO2_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="CO3_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="CO4_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="CO5_attainment_percent" class="form-control" placeholder="%"></td>
+          <td><input type="number" name="CO6_attainment_percent" class="form-control" placeholder="%"></td>
         </tr>
       </tbody>
     </table>
@@ -83,17 +83,17 @@
 
 <!-- Add gap between this table and the next -->
 <div style="margin-top: 80px;">
-  <table id="coTable" class="table table-bordered text-center">
+  <table id="COTable" class="table table-bordered text-center">
     <thead class="table-light">
       <tr>
         <th>Roll Number</th>
         <th>Name</th>
-        <th>Co1 Marks</th>
-        <th>Co2 Marks</th>
-        <th>Co3 Marks</th>
-        <th>Co4 Marks</th>
-        <th>Co5 Marks</th>
-        <th>Co6 Marks</th>
+        <th>CO1 Marks</th>
+        <th>CO2 Marks</th>
+        <th>CO3 Marks</th>
+        <th>CO4 Marks</th>
+        <th>CO5 Marks</th>
+        <th>CO6 Marks</th>
       </tr>
     </thead>
     <tbody>
@@ -114,19 +114,19 @@
 
 <script>
 function addRow() {
-  const table = document.getElementById("coTable").getElementsByTagName("tbody")[0];
+  const table = document.getElementById("COTable").getElementsByTagName("tbody")[0];
   const rowCount = table.rows.length;
   let row = table.insertRow(rowCount);
 
   row.innerHTML = `
     <td><input type="text" name="roll_number_${rowCount}" class="form-control" /></td>
     <td><input type="text" name="name_${rowCount}" class="form-control" /></td>
-    <td><input type="text" name="Co1_marks_${rowCount}" class="form-control" /></td>
-    <td><input type="text" name="Co2_marks_${rowCount}" class="form-control" /></td>
-    <td><input type="text" name="Co3_marks_${rowCount}" class="form-control" /></td>
-    <td><input type="text" name="Co4_marks_${rowCount}" class="form-control" /></td>
-    <td><input type="text" name="Co5_marks_${rowCount}" class="form-control" /></td>
-    <td><input type="text" name="Co6_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="CO1_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="CO2_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="CO3_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="CO4_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="CO5_marks_${rowCount}" class="form-control" /></td>
+    <td><input type="text" name="CO6_marks_${rowCount}" class="form-control" /></td>
   `;
   document.getElementById("total_rows").value = rowCount + 1;
 }
