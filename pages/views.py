@@ -3,6 +3,105 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from .models import Batch, Semester, Course, CO, CourseArticulationMatrix, Syllabus, AssementRubrics, AssessmentMarks
+from django.contrib import messages
+
+class CreateCourseView(TemplateView):
+    template_name = "pages/create_course.html"
+    
+    def get(self, request):
+        batches = Batch.objects.all()
+        semester = Semester.objects.all()
+        courses = Course.objects.all()
+        return render(request, self.template_name, {
+            'batches': batches,
+            'semesters': semester,
+            'courses': courses
+        })
+    
+    def post(self, request):
+        try:
+            # Handle Batch
+            batch_select = request.POST.get('batch_select')
+            if batch_select == 'new':
+                batch_name = request.POST.get('batch_name')
+                if not batch_name:
+                    messages.error(request, "Batch name is required for new batch.")
+                    return redirect('create_course')
+                batch, created = Batch.objects.get_or_create(
+                    name=batch_name,
+                    defaults={
+                        'start_date': '2023-01-01',
+                        'end_date': '2023-12-31'
+                    }
+                )
+                if not created:
+                    messages.error(request, "Batch already exists.")
+                    return redirect('create_course')
+            else:
+                try:
+                    batch = Batch.objects.get(id=batch_select)
+                except Batch.DoesNotExist:
+                    messages.error(request, "Selected batch does not exist.")
+                    return redirect('create_course')
+
+            # Handle Semester
+            semester_select = request.POST.get('semester_select')
+            semester_name = request.POST.get('semester_name')
+            
+            if semester_select == 'new':
+                if not semester_name:
+                    messages.error(request, "Semester name is required for new semester.")
+                    return redirect('create_course')
+                semester, created = Semester.objects.get_or_create(
+                    batch=batch,
+                    semester_name=semester_name,
+                    defaults={
+                        'semester_number': 1,  # You might want to calculate this
+                        'start_date': '2023-01-01',
+                        'end_date': '2023-12-31'
+                    }
+                )
+                if not created:
+                    messages.error(request, "Semester already exists for this batch.")
+                    return redirect('create_course')
+            else:
+                try:
+                    semester = Semester.objects.get(id=semester_select)
+                except Semester.DoesNotExist:
+                    messages.error(request, "Selected semester does not exist.")
+                    return redirect('create_course')
+
+            # Handle Course
+            course_select = request.POST.get('course_select')
+            if course_select == 'new':
+                # Get all required course fields
+                course_data = {
+                    'semester': semester,
+                    'course_code': request.POST.get('course_code'),
+                    'course_title': request.POST.get('course_title'),
+                    'type_of_course': request.POST.get('type_of_course'),
+                    'course_Designation': request.POST.get('course_Designation'),
+                    'Continuous_Assessment_marks': request.POST.get('Continuous_Assessment_marks'),
+                    'final_exam_marks': request.POST.get('final_exam_marks'),
+                    'credits': request.POST.get('credits')
+                }
+
+                # Validate all fields are present
+                if not all(course_data.values()):
+                    messages.error(request, "All course fields are required.")
+                    return redirect('create_course')
+
+                # Create new course
+                
+                course = Course.objects.create(**course_data)
+                messages.success(request, "Course created successfully.")
+                return redirect('create_course')
+
+
+        except Exception as e:
+            messages.error(request, f"An error occurred: {str(e)}")
+            return redirect('create_course')
+        
 
 
 class CreateCOView(TemplateView):
@@ -35,48 +134,6 @@ class CreateCOView(TemplateView):
                     action_verb=verb,
                     knowledge_level=level
                 )
-        return redirect('menu')
-
-class CreateCourseView(TemplateView):
-    def get(self, request):
-        return render(request, 'pages/add_course.html')
-
-    def post(self, request):
-        batch_name = request.POST.get('batch_name')
-        
-        sem_name = request.POST.get('semester_name')
-        sem_number = request.POST.get('semester_number')
-        
-        course_code = request.POST.get('course_code')
-        title = request.POST.get('course_title')
-
-        batch, _ = Batch.objects.get_or_create(
-            name=batch_name,
-            defaults={
-                'start_date': '2023-01-01',
-                'end_date': '2023-12-31'
-            }
-        )
-        semester, _ = Semester.objects.get_or_create(
-            batch=batch,
-            semester_name=sem_name,
-            semester_number=sem_number,
-            defaults={
-                'start_date': '2023-01-01',
-                'end_date': '2023-12-31'
-            }
-        )
-        Course.objects.create(
-            semester=semester,
-            course_code=course_code,
-            course_title=title,
-            type_of_course='Theory',
-            course_Designation='Compulsory',
-            Continuous_Assessment_marks=50,
-            final_exam_marks=50,
-            credits=3
-        )
-
         return redirect('menu')
     
 class HomePageView(TemplateView):
