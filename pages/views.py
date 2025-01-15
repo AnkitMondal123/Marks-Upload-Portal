@@ -2,7 +2,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from .models import Batch, Semester, Course, CO
+from .models import Batch, Semester, Course, CO, CourseArticulationMatrix, Syllabus
 
 
 class CreateCOView(TemplateView):
@@ -95,7 +95,11 @@ class CustomMenuPageView(LoginRequiredMixin, TemplateView):
         if not request.user.is_authenticated:
             return redirect(self.login_url)
         return super().dispatch(request, *args, **kwargs)
-    
+
+class articulationmatrix(TemplateView):
+    template_name="page/create_am.html"
+class syllabus(TemplateView):
+    template_name="page/create_syllabus.html"
 class assesmentrubrics(TemplateView):
     template_name = "pages/create_ar.html"
     def get(self, request):
