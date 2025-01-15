@@ -1,0 +1,122 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+
+  <!-- Batch Selection -->
+  <label for="batch_select">Select Batch:</label>
+  <select name="batch_select" id="batch_select" onchange="toggleBatchForm(this.value)" required>
+    <option value="">--Select Batch--</option>
+    {% for batch in batches %}
+    <option value="{{ batch.id }}">{{ batch.name }}</option>
+    {% endfor %}
+    <option value="new">Create New Batch</option>
+  </select>
+  <br>
+
+  <!-- Batch Details for New Batch -->
+  <div id="new_batch_fields" style="display: none;">
+    <label for="batch_name">Batch Name:</label>
+    <input type="text" name="batch_name" id="batch_name">
+  </div>
+
+  <!-- Semester Selection -->
+  <label for="semester_select">Select Semester:</label>
+  <select name="semester_select" id="semester_select" onchange="toggleSemesterForm(this.value)" required>
+    <option value="">--Select Semester--</option>
+    {% for semester in semesters %}
+    <option value="{{ semester.id }}" data-batch="{{ semester.batch.id }}">{{ semester.semester_name }}</option>
+    {% endfor %}
+    <option value="new">Create New Semester</option>
+  </select>
+  <br>
+
+  <!-- Semester Details for New Semester -->
+  <div id="new_semester_fields" style="display: none;">
+    <label for="semester_name">Semester Name:</label>
+    <input type="text" name="semester_name" id="semester_name">
+  </div>
+
+  <!-- Course Selection -->
+  <label for="course_select">Select Course:</label>
+  <select name="course_select" id="course_select" onchange="toggleCourseFields(this.value)" required>
+    <option value="">--Select Course--</option>
+    {% for course in courses %}
+    <option value="{{ course.id }}" data-semester="{{ course.semester.id }}">{{ course.course_title }}</option>
+    {% endfor %}
+    <option value="new">Create New Course</option>
+  </select>
+  <br>
+
+  <!-- Course Details for New Course -->
+  <div id="new_course_fields" style="display: none;">
+    <label for="course_code">Course Code:</label>
+    <input type="text" name="course_code" required>
+    <br>
+    <label for="course_title">Course Title:</label>
+    <input type="text" name="course_title" required>
+    <br>
+    <label for="type_of_course">Type of Course:</label>
+    <input type="text" name="type_of_course" required>
+    <br>
+    <label for="course_Designation">Course Designation:</label>
+    <input type="text" name="course_Designation" required>
+    <br>
+    <label for="Continuous_Assessment_marks">Continuous Assessment Marks:</label>
+    <input type="number" name="Continuous_Assessment_marks" required>
+    <br>
+    <label for="final_exam_marks">Final Exam Marks:</label>
+    <input type="number" name="final_exam_marks" required>
+    <br>
+    <label for="credits">Credits:</label>
+    <input type="number" name="credits" required>
+    <br>
+  </div>
+
+  <button type="submit">Create Course</button>
+</form>
+
+<script>
+  function toggleBatchForm(value) {
+    var newBatchFields = document.getElementById('new_batch_fields');
+    newBatchFields.style.display = value === 'new' ? 'block' : 'none';
+  }
+
+  function toggleSemesterForm(value) {
+    var newSemesterFields = document.getElementById('new_semester_fields');
+    newSemesterFields.style.display = value === 'new' ? 'block' : 'none';
+  }
+
+  function toggleCourseFields(value) {
+    var newCourseFields = document.getElementById('new_course_fields');
+    newCourseFields.style.display = value === 'new' ? 'block' : 'none';
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const batchDropdown = document.getElementById('batch_select');
+    const semesterDropdown = document.getElementById('semester_select');
+    const courseDropdown = document.getElementById('course_select');
+
+    batchDropdown.addEventListener('change', function () {
+      const selectedBatch = this.value;
+
+      Array.from(semesterDropdown.options).forEach(option => {
+        option.style.display = option.dataset.batch === selectedBatch || selectedBatch === "" || option.value === "new" ? '' : 'none';
+      });
+
+      semesterDropdown.value = '';
+    });
+
+    semesterDropdown.addEventListener('change', function () {
+      const selectedSemester = this.value;
+
+      Array.from(courseDropdown.options).forEach(option => {
+        option.style.display = option.dataset.semester === selectedSemester || selectedSemester === "" || option.value === "new" ? '' : 'none';
+      });
+
+      courseDropdown.value = '';
+    });
+  });
+</script>
+{% endblock content %}

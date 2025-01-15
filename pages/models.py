@@ -31,9 +31,7 @@ class Course(models.Model):
     Continuous_Assessment_marks = models.IntegerField()
     final_exam_marks = models.IntegerField()
     credits = models.IntegerField()
-    contact_hours = models.CharField(max_length=20, default='3L/week')
-    writer = models.CharField(max_length=100, default='Course Coordinator')
-    approved_by = models.CharField(max_length=100, default='HoD')
+    approved_by = models.CharField(max_length=100, default='Not Approved')
 
     def __str__(self):
         return f"{self.semester} {self.course_title} ({self.course_code})"
