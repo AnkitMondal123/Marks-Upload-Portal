@@ -95,3 +95,15 @@ class CustomMenuPageView(LoginRequiredMixin, TemplateView):
         if not request.user.is_authenticated:
             return redirect(self.login_url)
         return super().dispatch(request, *args, **kwargs)
+    
+class assesmentrubrics(TemplateView):
+    template_name = "pages/create_ar.html"
+    def get(self, request):
+        batches = Batch.objects.all()
+        semesters = Semester.objects.all()
+        courses = Course.objects.all()
+        return render(request, self.template_name, {
+            'batches': batches,
+            'semesters': semesters,
+            'courses': courses
+        })
