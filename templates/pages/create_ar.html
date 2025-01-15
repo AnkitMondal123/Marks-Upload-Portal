@@ -2,9 +2,10 @@
 {% load static %}
 {% block content %}
 <h3 class="mb-4 text-center">CO Evaluation</h3>
-<form method="POST" class="container">
+<form method="POST" id="rubricsForm" class="container">
   {% csrf_token %}
-  
+  <input type="hidden" name="rubrics_form" value="1">
+
   <!-- Align Batch, Semester, and Course in the same row -->
   <div class="row mb-3">
     <div class="col-md-4">
@@ -35,11 +36,8 @@
       </select>
     </div>
   </div>
-  
-</form>
 
-<!-- Add gap between this section and the next -->
-<div style="margin-top: 40px;">
+  <!-- CO Full Marks and Percentage Table -->
   <h3 class="mb-4 text-center">CO Full Marks and Percentage Table</h3>
   <div class="container">
     <table class="table table-bordered text-center">
@@ -76,14 +74,21 @@
       </tbody>
     </table>
   </div>
-  <!-- New submit button above the next table -->
   <div class="text-center">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Save Rubrics</button>
   </div>
-</div>
+</form>
 
-<!-- Add gap between this table and the next -->
-<div style="margin-top: 80px;">
+<!-- Gap Between Tables -->
+<div style="margin-top: 80px;"></div>
+
+<!-- Assessment Marks Form -->
+<form method="POST" id="marksForm" class="container">
+  {% csrf_token %}
+  <input type="hidden" name="marks_form" value="1">
+  <input type="hidden" name="rubric_id" value="{{ rubric.id }}">
+
+  <h3 class="mb-4 text-center">CO Marks Table</h3>
   <table id="COTable" class="table table-bordered text-center">
     <thead class="table-light">
       <tr>
@@ -98,20 +103,16 @@
       </tr>
     </thead>
     <tbody>
-      <!-- Rows will be added by JS -->
+      <!-- Rows will be dynamically added by JS -->
     </tbody>
   </table>
-</div>
-
-<input type="hidden" name="total_rows" id="total_rows" value="0" />
-<div class="mb-3">
-  <button type="button" class="btn btn-primary" onclick="addRow()">Add Row</button>
-</div>
-
-<!-- Final submit button -->
-<div class="text-center">
-  <button type="submit" class="btn btn-primary">Submit</button>
-</div>
+  <input type="hidden" name="total_rows" id="total_rows" value="0" />
+  <div class="mb-3">
+    <button type="button" class="btn btn-primary" onclick="addRow()">Add Row</button>
+  </div>
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary">Save Marks</button>
+  </div>
 </form>
 
 <script>
@@ -132,5 +133,31 @@ function addRow() {
   `;
   document.getElementById("total_rows").value = rowCount + 1;
 }
+
+// Handle Rubrics Form Submission
+const rubricsForm = document.getElementById('rubricsForm');
+rubricsForm.onsubmit = function(e) {
+  e.preventDefault();
+  const formData = new FormData(rubricsForm);
+  fetch('', {
+    method: 'POST',
+    body: formData
+  }).then(response => response.json()).then(data => {
+    alert(data.message);
+  });
+};
+
+// Handle Marks Form Submission
+const marksForm = document.getElementById('marksForm');
+marksForm.onsubmit = function(e) {
+  e.preventDefault();
+  const formData = new FormData(marksForm);
+  fetch('', {
+    method: 'POST',
+    body: formData
+  }).then(response => response.json()).then(data => {
+    alert(data.message);
+  });
+};
 </script>
 {% endblock content %}
