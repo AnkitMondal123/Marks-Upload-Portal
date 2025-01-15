@@ -7,6 +7,29 @@
 <div class="container mt-5">
     <h1 class="display-4 text-center mb-5 fw-bold">Welcome to the Marks Upload Portal</h1>
     <div class="row">
+        <!-- Course Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Course</h5>
+                    <p class="card-text">Create and update Courses</p>
+                    <a href="{% url 'create_course' %}" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Syllabus Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Course Syllabus</h5>
+                    <p class="card-text">Create and update Course Syllabus</p>
+                    <a href="{% url 'create_syllabus' %}" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Outcomes Card -->
         <div class="col-md-4 mb-4">
             <div class="card h-100">
                 <div class="card-body text-center">
@@ -16,21 +39,25 @@
                 </div>
             </div>
         </div>
+
+        <!-- Course Articulation Matrix Card -->
         <div class="col-md-4 mb-4">
             <div class="card h-100">
                 <div class="card-body text-center">
                     <h5 class="card-title">Course Articulation Matrix</h5>
                     <p class="card-text">Create and update Course Articulation Matrix</p>
-                    <a href="#" class="btn btn-primary">Go</a>
+                    <a href="{% url 'create_am' %}" class="btn btn-primary">Go</a>
                 </div>
             </div>
         </div>
+
+        <!-- Assessment Rubrics Card -->
         <div class="col-md-4 mb-4">
             <div class="card h-100">
                 <div class="card-body text-center">
                     <h5 class="card-title">Assessment Rubrics</h5>
                     <p class="card-text">Create and update Assessment Rubrics</p>
-                    <a href="{% url 'create_ar' %}"" class="btn btn-primary">Go</a>
+                    <a href="{% url 'create_ar' %}" class="btn btn-primary">Go</a>
                 </div>
             </div>
         </div>

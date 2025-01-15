@@ -37,6 +37,7 @@ class CreateCOView(TemplateView):
                 )
         return redirect('menu')
 
+
 class CreateCourseView(TemplateView):
     def get(self, request):
         return render(request, 'pages/add_course.html')
@@ -79,8 +80,10 @@ class CreateCourseView(TemplateView):
 
         return redirect('menu')
     
+
 class HomePageView(TemplateView):
     template_name = "pages/home.html"
+
 
 class CustomMenuPageView(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('account_login')  
@@ -96,11 +99,8 @@ class CustomMenuPageView(LoginRequiredMixin, TemplateView):
             return redirect(self.login_url)
         return super().dispatch(request, *args, **kwargs)
 
-class articulationmatrix(TemplateView):
-    template_name="page/create_am.html"
-class syllabus(TemplateView):
-    template_name="page/create_syllabus.html"
-class assesmentrubrics(TemplateView):
+
+class AssesmentRubricsView(TemplateView):
     template_name = "pages/create_ar.html"
     def get(self, request):
         batches = Batch.objects.all()
@@ -111,3 +111,9 @@ class assesmentrubrics(TemplateView):
             'semesters': semesters,
             'courses': courses
         })
+    
+class ArticulationMatrixView(TemplateView):
+    template_name="pages/create_am.html"
+
+class SyllabusView(TemplateView):
+    template_name="pages/create_syllabus.html"
