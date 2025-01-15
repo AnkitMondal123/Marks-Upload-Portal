@@ -38,6 +38,7 @@ class Course(models.Model):
     def __str__(self):
         return f"{self.semester} {self.course_title} ({self.course_code})"
 
+
 class CO(models.Model):
     # Represents a course outcome for a given course
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='co')
@@ -49,24 +50,10 @@ class CO(models.Model):
     def __str__(self):
         return f"{self.course.course_title} - {self.course_outcome}"
 
-'''class PO(models.Model):
-    code=models.CharField(max_length=255,unique=True)
-    description=models.TextField()
-    
-    def __str__(self):
-        return self.code
-
-class PSO(models.Model):
-    code=models.CharField(max_length=255,unique=True)
-    description=models.TextField()
-    
-    def __str__(self):
-        return self.code'''
 
 class CourseArticulationMatrix(models.Model):
     #Represents a Course Articulation Matrix for a given course
     course=models.ForeignKey(Course,on_delete=models.CASCADE,related_name='cam')
-    #outcome=models.ForeignKey(CO,on_delete=models.CASCADE)
     conumber=models.CharField(max_length=5,default='-')
     PO1=models.IntegerField(default=0)
     PO2=models.IntegerField(default=0)
@@ -85,7 +72,8 @@ class CourseArticulationMatrix(models.Model):
     
     def __str__(self):
         return f'Course Articulation Matrix'
-    
+
+
 class Syllabus:
     #Represents a University Syllabus
     course=models.ForeignKey(Course,on_delete=models.CASCADE,related_name='syllabus')
@@ -95,6 +83,7 @@ class Syllabus:
     
     def __str__(self):
         return f"Unit {self.unit}: {self.hours_per_unit} hours"
+
 
 class AssementRubrics(models.Model):
     # Represents a AssementRubrics for a given course
@@ -111,6 +100,10 @@ class AssementRubrics(models.Model):
     co4_attainment_percent = models.IntegerField(null=True, blank=True)
     co5_attainment_percent = models.IntegerField(null=True, blank=True)
     co6_attainment_percent = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.course.course_title} - Assement Rubrics"
+
 
 class AssessmentMarks(models.Model):
     # represents a student's marks for a given course
